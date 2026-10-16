@@ -1444,11 +1444,8 @@ body.dark-theme .about-page-section {
     background: rgba(11, 18, 24, 0.90);
 }
 body {
-    background-image: url("images/workshop-bg.png") !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-attachment: fixed !important;
-    background-repeat: no-repeat !important;
+    background-image: none !important;
+    background-color: transparent !important;
 }
 /* =========================
    WORKSHOP BACKGROUND VISIBILITY
@@ -1480,7 +1477,7 @@ body.dark-theme .services-page-grid,
 body.dark-theme .projects-page-grid,
 body.dark-theme .contact-page,
 body.dark-theme .about-page-section {
-    background: rgba(11, 18, 24, 0.72) !important;
+    background: rgba(11, 18, 24, 0.65) !important;
 }
 body {
     background:
@@ -1690,7 +1687,7 @@ body:not(.dark-theme) .services-page-grid,
 body:not(.dark-theme) .projects-page-grid,
 body:not(.dark-theme) .contact-page,
 body:not(.dark-theme) .about-page-section {
-    background: rgba(245, 247, 250, 0.68) !important;
+    background: rgba(245, 247, 250, 0.65) !important;
 
     backdrop-filter: blur(2px);
 }
@@ -2455,4 +2452,52 @@ html {
 #lightbox-image.is-panning {
     cursor: grabbing;
     transition: none;
+}
+
+/* =====================================
+   NEXASTEEL VIDEO BACKGROUND
+===================================== */
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.video-background video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+/* =====================================
+   PRODUCTS PAGE VIDEO VISIBILITY
+===================================== */
+
+/* LIGHT MODE */
+body:not(.dark-theme) .products-page-grid {
+    background: rgba(245, 247, 250, 0.35) !important;
+}
+
+/* DARK MODE */
+body.dark-theme .products-page-grid {
+    background: rgba(11, 18, 24, 0.45) !important;
+}
+/* Products page - transparent dark-grey panels */
+
+body.dark-theme .product-showcase-card,
+body.dark-theme .product-showcase-content {
+    background: rgba(21, 31, 40, 0.20) !important;
+}
+
+body:not(.dark-theme) .product-showcase-card,
+body:not(.dark-theme) .product-showcase-content {
+    background: rgba(245, 247, 250, 0.25) !important;
 }

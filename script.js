@@ -232,6 +232,7 @@ const homepageProjectGallery =
     document.getElementById("homepage-project-gallery");
 
 const projectImages = [
+
     "IMG-20260903-WA0003.jpg",
     "IMG-20260903-WA0041.jpg",
     "IMG-20260903-WA0049.jpg",
@@ -251,11 +252,13 @@ const projectImages = [
     "IMG-20260903-WA0146.jpg",
     "IMG-20260903-WA0148.jpg",
     "IMG-20260903-WA0151.jpg",
+
     "IMG-20260904-WA0002.jpg",
     "IMG-20260904-WA0003.jpg",
     "IMG-20260904-WA0004.jpg",
     "IMG-20260904-WA0005.jpg",
-    "IMG-20260904-WA0006.jpg",
+    "IMG-20260904-WA0006.jpg"
+
 ];
 
 
@@ -267,7 +270,8 @@ if (homepageProjectGallery) {
             document.createElement("img");
 
         image.src =
-            "images/projects/" + imageName;
+            "images/projects/" +
+            imageName.replace(".jpg", ".webp");
 
         image.alt =
             "NexaSteel advertising and fabrication project";
@@ -964,3 +968,84 @@ function stopLightboxPan() {
         );
     }
 }
+
+
+/* =====================================
+   NEXASTEEL CONTINUOUS VIDEO PLAYLIST
+===================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("background-video");
+
+    if (!video) return;
+
+    const playlist = [
+        "videos/index-bg.mp4",
+        "videos/billboard-bg.mp4",
+        "videos/nexasteel-workshop.mp4",
+        "videos/contact-us-bg.mp4"
+    ];
+
+    const storageKey = "nexasteel-video-playlist";
+
+    let savedState = {};
+
+    try {
+        savedState = JSON.parse(
+            sessionStorage.getItem(storageKey) || "{}"
+        );
+    } catch (error) {
+        savedState = {};
+    }
+
+    let currentIndex = Number.isInteger(savedState.index)
+        && savedState.index >= 0
+        && savedState.index < playlist.length
+        ? savedState.index
+        : 0;
+
+    const savedTime = Number.isFinite(savedState.time)
+        ? Math.max(0, savedState.time)
+        : 0;
+
+    video.muted = true;
+    video.loop = false;
+
+    function saveProgress() {
+        sessionStorage.setItem(
+            storageKey,
+            JSON.stringify({
+                index: currentIndex,
+                time: video.currentTime
+            })
+        );
+    }
+
+    function playVideo(index, startTime = 0) {
+        currentIndex = index;
+        video.src = playlist[currentIndex];
+        video.load();
+
+        video.addEventListener("loadedmetadata", function restoreTime() {
+            video.removeEventListener("loadedmetadata", restoreTime);
+
+            if (startTime < video.duration) {
+                video.currentTime = startTime;
+            }
+
+            video.play().catch(() => {
+                // Browser may restrict autoplay.
+            });
+        });
+    }
+
+    video.addEventListener("ended", () => {
+        const nextIndex = (currentIndex + 1) % playlist.length;
+        playVideo(nextIndex);
+    });
+
+    video.addEventListener("timeupdate", saveProgress);
+    window.addEventListener("pagehide", saveProgress);
+
+    playVideo(currentIndex, savedTime);
+});
