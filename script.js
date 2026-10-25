@@ -980,11 +980,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!video) return;
 
     const playlist = [
-        "videos/index-bg.mp4",
-        "videos/billboard-bg.mp4",
-        "videos/nexasteel-workshop.mp4",
-        "videos/contact-us-bg.mp4"
-    ];
+    "videos/index-bg.mp4",
+    "videos/billboard-bg-optimized.mp4",
+    "videos/nexasteel-workshop-optimized.mp4",
+    "videos/contact-us-bg-optimized.mp4"
+];
 
     const storageKey = "nexasteel-video-playlist";
 
